@@ -61,29 +61,7 @@ def main():
     database = Database('main_amareto', 'michepass')
     print(database.db.collection_names(include_system_collections=False))
     print(database.products_col)
-    new_veh = {'kaufpreis': 0,
-           'marke': 'Test Auto',
-           'max_load': 10000,
-           'max_speed': 500,
-           'mietpreis': 123000,
-           'panzerung': 200,
-           'passagiere': 55,
-           'pferdest': 232,
-           'tank': 1000,
-           'veh_type': 'PKW'}
-    # ADD DELETE TEST
-    # database.add_vehicle(new_veh)
-    # database.delete_vehicle_ID('5a4cfae4b9346e12c8167eb6')
 
-    new_prod = {'name': 'LSD',
-                'preis': 7000,
-                'gewicht': 2,
-                'mat_consume': [
-                    {'id': '', 'number': 2}
-                ]
-                }
-    # database.add_product(new_prod)
-    database.delete_product_id('5a4e5f2cb9346e1e4056eb99')
 
 
     print('_'*61)
@@ -149,7 +127,7 @@ def main():
     
     hemmt = database.get_item_by_id('vehicles', '5a3b9bffb9346e15603fe81c')
     
-    # lsd = database.get_item_by_id('products', '5a4e5f84b9346e1cc40abc87')
+    lsd = database.get_item_by_id('products', '5a4f6726b9346e1f000bc7b4')
     # plastik = database.get_item_by_id('products', '5a4e5f2cb9346e1e4056eb99')
     #
     # chain_route(hemmt, plastik)
