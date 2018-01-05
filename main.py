@@ -56,6 +56,17 @@ class Database:
     def get_item_by_id(self, col_name, id_str):
         return self.db[col_name].find_one({'_id': ObjectId(id_str)})
 
+    def update_itemfield_by_id(self, col_name, id_str, field, new_value):
+        return self.db[col_name].update_one(
+            {'_id': ObjectId(id_str)},
+            {
+                "$set": {
+                    field: new_value
+                },
+                "$currentDate": {"lastModified": True}
+            }
+        )
+
 
 def main():
     database = Database('main_amareto', 'michepass')
@@ -104,33 +115,34 @@ def main():
             str(prod.get('_id', 'NIX'))
         ))
     print('-'*61)
-    
-    
-    def chain_route(veh, prod):
-        empty_load = veh.get('max_load', 0)
-        mats = prod.get('mat_consume', {})
-        mat1_id = 0
-        mat1_consume = mats[0]
-        component = database.get_item_by_id('products', mat1_id)
 
-        pieces = empty_load / component.get('gewicht', 1)
-        pieces = int(pieces / mat1_consume)
-    
-        for mat_id, mat_consume in mats[1:]:
-            component = database.get_item_by_id('products', mat_id)
-            pieces = int(pieces / mat_consume)
-            print(empty_load, pieces)
+    def route(veh, prod):
+        empty_load = veh.get('max_load', 0)
+        mats = prod.get('mat_consume', [])
+        gewicht_in_materials = 0
+        for mat in mats:
+            mat_id = mat.get('id', '')
+            mat_consume = mat.get('number', 1)
+            mat_gewicht = database.get_item_by_id('products', mat_id).get('gewicht', 1)
+            gewicht_in_materials += mat_gewicht * mat_consume
+        pieces = empty_load / gewicht_in_materials
         receipt = pieces * prod.get('preis', 0)
         print('{} with {} can make {} pieces. Receipt:${}'.format(
             prod.get('name', 'NIX'), veh.get('marke', 'Nix'), pieces,  int(receipt*0.5 + receipt)
         ))
+        for mat in mats:
+            mat_id = mat.get('id', '')
+            mat_name = database.get_item_by_id('products', mat_id).get('name', 1)
+            number = pieces * mat.get('number', 0)
+            print('You need {} pieces of {}'.format(number, mat_name))
     
     hemmt = database.get_item_by_id('vehicles', '5a3b9bffb9346e15603fe81c')
+    mustang = database.get_item_by_id('vehicles', '5a3b94348c88be1278129455')
     
-    lsd = database.get_item_by_id('products', '5a4f6726b9346e1f000bc7b4')
-    # plastik = database.get_item_by_id('products', '5a4e5f2cb9346e1e4056eb99')
-    #
-    # chain_route(hemmt, plastik)
+    lsd = database.get_item_by_id('products', '5a4f69d1b9346e12bc2b0476')
+    plastik = database.get_item_by_id('products', '5a4f6fe3b9346e1cf42de7c0')
+    kupferbaren = database.get_item_by_id('products', '5a4f7468b9346e0b0ca8aba3')
+    route(mustang, kupferbaren)
 
 
 if __name__ == '__main__':
