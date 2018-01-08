@@ -1,5 +1,6 @@
 import pprint
 import locale
+import argparse
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from bson import ObjectId
 
@@ -76,7 +77,12 @@ def money(dolar):
 
 
 def main():
-    database = Database('main_amareto', 'michepass')
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--user')
+    parser.add_argument('--password')
+    args = parser.parse_args()
+
+    database = Database(args.user, args.password)
     print(database.db.collection_names(include_system_collections=False))
     print(database.products_col)
 
@@ -152,7 +158,7 @@ def main():
     plastik = database.get_item_by_id('products', '5a4f6fe3b9346e1cf42de7c0')
     kupferbaren = database.get_item_by_id('products', '5a4f7468b9346e0b0ca8aba3')
     elektro = database.get_item_by_id('products', '5a53492ab9346e07a4c78e79')
-    route(renault_midlum, plastik)
+    route(renault_midlum, elektro)
 
 
 if __name__ == '__main__':

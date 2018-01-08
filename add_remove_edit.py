@@ -1,6 +1,12 @@
+import argparse
 from main import Database
 
-database = Database('main_amareto', 'michepass')
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--user')
+parser.add_argument('--password')
+args = parser.parse_args()
+
+database = Database(args.user, args.password)
 
 new_veh = {'kaufpreis': 400000,
            'marke': 'Renault Midlum',
@@ -13,7 +19,7 @@ new_veh = {'kaufpreis': 400000,
            'tank': 500,
            'veh_type': 'LKW'}
 # ADD DELETE TEST
-database.add_vehicle(new_veh)
+# database.add_vehicle(new_veh)
 # database.delete_vehicle_ID('5a4cfae4b9346e12c8167eb6')
 
 new_prod = {'name': 'Elektroteile',
