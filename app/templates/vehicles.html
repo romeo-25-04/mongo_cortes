@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block body %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Marke</th>
+            <th scope="col">Preis</th>
+            <th scope="col">Max Load</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for vehicle in vehicles %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ vehicle.marke }}</td>
+            <td>${{ vehicle.kaufpreis }}</td>
+            <td>{{ vehicle.max_load }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
