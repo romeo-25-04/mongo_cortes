@@ -153,13 +153,14 @@ def main():
     mustang = database.get_item_by_id('vehicles', '5a3b94348c88be1278129455')
     huron = database.get_item_by_id('vehicles', '5a535314b9346e0b04b4b386')
     renault_midlum = database.get_item_by_id('vehicles', '5a53561fb9346e1b4cddea45')
+    blackfish = database.get_item_by_id('vehicles', '5a53a62e8c88be0ab02e6f42')
     
     lsd = database.get_item_by_id('products', '5a4f69d1b9346e12bc2b0476')
     plastik = database.get_item_by_id('products', '5a4f6fe3b9346e1cf42de7c0')
     kupferbaren = database.get_item_by_id('products', '5a4f7468b9346e0b0ca8aba3')
     elektro = database.get_item_by_id('products', '5a53492ab9346e07a4c78e79')
 
-    name, marke, pieces, receipt, info = route(database, huron, elektro)
+    name, marke, pieces, receipt, info = route(database, blackfish, elektro)
     print('{} with {} can make {} pieces. Receipt:${}'.format(
         name, marke, pieces, receipt
     ))

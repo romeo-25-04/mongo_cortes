@@ -8,18 +8,18 @@ args = parser.parse_args()
 
 database = Database(args.user, args.password)
 
-new_veh = {'kaufpreis': 400000,
-           'marke': 'Renault Midlum',
-           'max_load': 800,
-           'max_speed': 112,
-           'mietpreis': 200000,
-           'panzerung': 100,
-           'passagiere': 2,
-           'pferdest': 450,
-           'tank': 500,
-           'veh_type': 'LKW'}
+new_veh = {'kaufpreis': 100000000,
+           'marke': 'V-44 Blackfish',
+           'max_load': 5000,
+           'max_speed': 620,
+           'mietpreis': 50000000,
+           'panzerung': 400,
+           'passagiere': 3,
+           'pferdest': 1200,
+           'tank': 2000,
+           'veh_type': 'Flugzeug'}
 # ADD DELETE TEST
-# database.add_vehicle(new_veh)
+database.add_vehicle(new_veh)
 # database.delete_vehicle_ID('5a4cfae4b9346e12c8167eb6')
 
 new_prod = {'name': 'Elektroteile',
