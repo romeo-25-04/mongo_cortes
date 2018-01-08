@@ -1,8 +1,10 @@
 import pprint
+import locale
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from bson import ObjectId
 
 pp = pprint.PrettyPrinter(indent=2)
+locale.setlocale(locale.LC_ALL, '')
 
 
 class Database:
@@ -68,6 +70,11 @@ class Database:
         )
 
 
+def money(dolar):
+    formatted = locale.currency(dolar, symbol=False, grouping=True)
+    return formatted[:-3]
+
+
 def main():
     database = Database('main_amareto', 'michepass')
     print(database.db.collection_names(include_system_collections=False))
@@ -125,16 +132,16 @@ def main():
             mat_consume = mat.get('number', 1)
             mat_gewicht = database.get_item_by_id('products', mat_id).get('gewicht', 1)
             gewicht_in_materials += mat_gewicht * mat_consume
-        pieces = empty_load / gewicht_in_materials
+        pieces = int(empty_load / gewicht_in_materials)
         receipt = pieces * prod.get('preis', 0)
         print('{} with {} can make {} pieces. Receipt:${}'.format(
-            prod.get('name', 'NIX'), veh.get('marke', 'Nix'), pieces,  int(receipt*0.5 + receipt)
+            prod.get('name', 'NIX'), veh.get('marke', 'Nix'), pieces,  money(int(receipt))
         ))
         for mat in mats:
             mat_id = mat.get('id', '')
             mat_name = database.get_item_by_id('products', mat_id).get('name', 1)
             number = pieces * mat.get('number', 0)
-            print('You need {} pieces of {}'.format(number, mat_name))
+            print('You need {:3} pieces ({:4} raw materials) of {}'.format(number, number*2, mat_name))
     
     hemmt = database.get_item_by_id('vehicles', '5a3b9bffb9346e15603fe81c')
     mustang = database.get_item_by_id('vehicles', '5a3b94348c88be1278129455')
@@ -142,7 +149,8 @@ def main():
     lsd = database.get_item_by_id('products', '5a4f69d1b9346e12bc2b0476')
     plastik = database.get_item_by_id('products', '5a4f6fe3b9346e1cf42de7c0')
     kupferbaren = database.get_item_by_id('products', '5a4f7468b9346e0b0ca8aba3')
-    route(mustang, kupferbaren)
+    elektro = database.get_item_by_id('products', '5a53492ab9346e07a4c78e79')
+    route(mustang, elektro)
 
 
 if __name__ == '__main__':
