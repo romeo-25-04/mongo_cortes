@@ -8,6 +8,7 @@
             <th scope="col">Name</th>
             <th scope="col">Preis</th>
             <th scope="col">Gewicht</th>
+            <th scope="col">Materials</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +18,13 @@
             <td>{{ product.name }}</td>
             <td>${{ product.preis }}</td>
             <td>{{ product.gewicht }}</td>
+            <td>
+                <ul class="list-group">
+                {% for material in product.mat_consume %}
+                    <li class="list-group-item">{{ material.number }} {{ material.name }}</li>
+                {% endfor %}
+                </ul>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

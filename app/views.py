@@ -4,6 +4,7 @@ from main import Database
 
 database = Database('main_amareto', 'michepass')
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -27,8 +28,18 @@ def products():
     sorted_products = database.products_col.find().sort([
         ('name', 1)
     ])
-    sorted_products = [prod for prod in sorted_products]
+    products_list = []
+    for prod in sorted_products:
+        mats = prod.get('mat_consume', [])
+        materials = []
+        for mat in mats:
+            mat_id = mat.get('id', '')
+            mat_nr = mat.get('number')
+            mat_name = database.get_item_by_id('products', mat_id).get('name', 'NIX')
+            materials.append({'name': mat_name, 'number': mat_nr})
+        prod['mat_consume'] = materials
+        products_list.append(prod)
     return render_template('products.html', title='Products',
                            acProd='active',
-                           products=sorted_products)
+                           products=products_list)
 
