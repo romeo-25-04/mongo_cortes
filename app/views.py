@@ -24,5 +24,11 @@ def vehicles():
 
 @app.route('/products')
 def products():
-    return render_template('products.html', title='Products', acProd='active')
+    sorted_products = database.products_col.find().sort([
+        ('name', 1)
+    ])
+    sorted_products = [prod for prod in sorted_products]
+    return render_template('products.html', title='Products',
+                           acProd='active',
+                           products=sorted_products)
 
