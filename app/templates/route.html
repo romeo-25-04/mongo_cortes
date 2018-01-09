@@ -20,7 +20,14 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<div>
-    {{ result }}
-</div>
+<blockquote class="blockquote">
+    <p>You can make <strong>{{ result.pieces }}</strong> of <strong>{{ result.name }}</strong> with <strong>{{ result.marke }}</strong>.</p>
+    <p>Your profit will be <strong>$ {{ result.receipt }}</strong>.</p>
+    <p>Materials you will need:</p>
+    <ul class="list-group">
+    {% for mat_name, number in result.info %}
+        <li class="list-group-item">{{ number }} {{ mat_name }}</li>
+    {% endfor %}
+    </ul>
+</blockquote>
 {% endblock %}

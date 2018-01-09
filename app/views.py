@@ -52,9 +52,11 @@ def products():
 
 @app.route('/route', methods=['GET', 'POST'])
 def route():
-    products=get_products()
-    vehicles=get_vehicles()
-    result=None
+    products = get_products()
+    vehicles = get_vehicles()
+    result = {'name': 'Select a Product',
+              'marke': 'Select a Vehicle',
+              'pieces': 0, 'receipt': 0, 'info': []}
     if request.method == 'POST':
         result = request.form
         veh_id = result.get('Vehicle', 'NIX')
@@ -63,7 +65,8 @@ def route():
         product = database.get_item_by_id('products', prod_id)
         name, marke, pieces, receipt, info = route_calc(database, vehicle, product)
 
-        result = [name, marke, pieces, receipt, info]
+        result = {'name': name, 'marke': marke,
+                  'pieces': pieces, 'receipt': receipt, 'info': info}
     else:
         pass
     return render_template('route.html', title='Route',
