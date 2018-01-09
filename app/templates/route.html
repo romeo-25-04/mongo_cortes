@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block body %}
+<form method="post">
+    <div class="form-group">
+        <label for="formSelectVehicle">Select Vehicle</label>
+        <select class="form-control" id="formSelectVehicle" name="Vehicle">
+        {% for vehicle in vehicles %}
+            <option value="{{ vehicle._id }}">{{ vehicle.marke }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="formSelectProduct">Select Product</label>
+        <select class="form-control" id="formSelectProduct" name="Product">
+        {% for product in products %}
+            <option value="{{ product._id }}">{{ product.name }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div>
+    {{ result }}
+</div>
+{% endblock %}

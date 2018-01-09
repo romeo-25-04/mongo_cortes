@@ -76,7 +76,7 @@ def money(dolar):
     return formatted[:-3]
 
 
-def route(db, veh, prod):
+def route_calc(db, veh, prod):
     empty_load = veh.get('max_load', 0)
     mats = prod.get('mat_consume', [])
     gewicht_in_materials = 0
@@ -85,7 +85,7 @@ def route(db, veh, prod):
         mat_consume = mat.get('number', 1)
         mat_gewicht = db.get_item_by_id('products', mat_id).get('gewicht', 1)
         gewicht_in_materials += mat_gewicht * mat_consume
-    pieces = int(empty_load / gewicht_in_materials)
+    pieces = int(empty_load / gewicht_in_materials) if gewicht_in_materials != 0 else int(empty_load / 2)
     receipt = pieces * prod.get('preis', 0)
     components = []
     for mat in mats:
@@ -160,7 +160,7 @@ def main():
     kupferbaren = database.get_item_by_id('products', '5a4f7468b9346e0b0ca8aba3')
     elektro = database.get_item_by_id('products', '5a53492ab9346e07a4c78e79')
 
-    name, marke, pieces, receipt, info = route(database, blackfish, elektro)
+    name, marke, pieces, receipt, info = route_calc(database, blackfish, elektro)
     print('{} with {} can make {} pieces. Receipt:${}'.format(
         name, marke, pieces, receipt
     ))
