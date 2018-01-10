@@ -22,13 +22,11 @@ new_veh = {'kaufpreis': 100000000,
 # database.add_vehicle(new_veh)
 # database.delete_vehicle_ID('5a4cfae4b9346e12c8167eb6')
 
-new_prod = {'name': 'Elektroteile',
-            'preis': 90000,
+new_prod = {'name': 'Gold',
+            'preis': 1350,
             'gewicht': 2,
             'mat_consume': [
-                {'id': '5a4f743eb9346e0f185515bb', 'number': 4},
-                {'id': '5a4f7468b9346e0b0ca8aba3', 'number': 2},
-                {'id': '5a4f6fe3b9346e1cf42de7c0', 'number': 6}
+                {'id': '5a560f9d8c88be0f80d49d87', 'number': 2}
             ]
             }
 # database.add_product(new_prod)

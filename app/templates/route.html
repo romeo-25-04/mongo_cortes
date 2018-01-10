@@ -5,7 +5,7 @@
         <label for="formSelectVehicle">Select Vehicle</label>
         <select class="form-control" id="formSelectVehicle" name="Vehicle">
         {% for vehicle in vehicles %}
-            <option value="{{ vehicle._id }}">{{ vehicle.marke }}</option>
+            <option value="{{ vehicle._id }}" {% if vehicle.marke == result.marke %}selected{% endif %}>{{ vehicle.marke }}</option>
         {% endfor %}
         </select>
     </div>
@@ -13,7 +13,7 @@
         <label for="formSelectProduct">Select Product</label>
         <select class="form-control" id="formSelectProduct" name="Product">
         {% for product in products %}
-            <option value="{{ product._id }}">{{ product.name }}</option>
+            <option value="{{ product._id }}" {% if product.name == result.name %}selected{% endif %}>{{ product.name }}</option>
         {% endfor %}
         </select>
     </div>

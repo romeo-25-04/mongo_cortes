@@ -1,6 +1,6 @@
 from flask import render_template, request
 from app import app
-from main import Database, route_calc
+from main import Database, route_calc, money
 
 database = Database('main_amareto', 'michepass')
 
@@ -9,7 +9,11 @@ def get_vehicles():
     sorted_vehicles = database.vehicles_col.find().sort([
         ('max_load', 1)
     ])
-    return [auto for auto in sorted_vehicles]
+    vehicles = []
+    for auto in sorted_vehicles:
+        auto['kaufpreis'] = money(auto['kaufpreis'])
+        vehicles.append(auto)
+    return vehicles
 
 
 def get_products():
@@ -26,6 +30,7 @@ def get_products():
             mat_name = database.get_item_by_id('products', mat_id).get('name', 'NIX')
             materials.append({'name': mat_name, 'number': mat_nr})
         prod['mat_consume'] = materials
+        prod['preis'] = money(prod['preis'])
         products_list.append(prod)
     return products_list
 
