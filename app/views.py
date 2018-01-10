@@ -1,6 +1,6 @@
 from flask import render_template, request
 from app import app
-from main import Database, route_calc, money
+from main import Database, money
 
 database = Database('main_amareto', 'michepass')
 
@@ -66,9 +66,7 @@ def route():
         result = request.form
         veh_id = result.get('Vehicle', 'NIX')
         prod_id = result.get('Product', 'NIX')
-        vehicle = database.get_item_by_id('vehicles', veh_id)
-        product = database.get_item_by_id('products', prod_id)
-        name, marke, pieces, receipt, info = route_calc(database, vehicle, product)
+        name, marke, pieces, receipt, info = database.route_calc(veh_id, prod_id)
 
         result = {'name': name, 'marke': marke,
                   'pieces': pieces, 'receipt': receipt, 'info': info}
