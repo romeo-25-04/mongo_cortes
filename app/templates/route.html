@@ -24,10 +24,32 @@
     <p>You can make <strong>{{ result.pieces }}</strong> of <strong>{{ result.name }}</strong> with <strong>{{ result.marke }}</strong>.</p>
     <p>Your profit will be <strong>$ {{ result.receipt }}</strong>.</p>
     <p>Materials you will need:</p>
-    <ul class="list-group">
-    {% for mat_name, number in result.info %}
-        <li class="list-group-item">{{ number }} {{ mat_name }} take {{ number * 2 }} Space/Materials</li>
-    {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Material</th>
+                <th scope="col">Need</th>
+                <th scope="col">Have</th>
+                <th scope="col">Difference Pieces</th>
+                <th scope="col">Difference Space</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mat_name, number in result.info %}
+            <tr>
+                <td>{{ mat_name }}</td>
+                <td id="{{ mat_name }}_need">{{ number }}</td>
+                <td>
+                    <input type="number" class="form-control col-3 material_have" id="{{ mat_name }}" name="number_have" value="{{ number }}">
+                </td>
+                <td id="{{ mat_name }}_diffP">0</td>
+                <td id="{{ mat_name }}_diffS">0</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </blockquote>
+{% endblock %}
+{% block script %}
+<script src="/static/js/myscript.js"></script>
 {% endblock %}
