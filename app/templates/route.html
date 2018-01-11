@@ -40,10 +40,10 @@
                 <td>{{ mat_name }}</td>
                 <td id="{{ mat_name }}_need">{{ number }}</td>
                 <td>
-                    <input type="number" class="form-control col-3 material_have" id="{{ mat_name }}" name="number_have" value="{{ number }}">
+                    <input type="number" class="form-control col-3 material_have" id="{{ mat_name }}" name="number_have" value="0">
                 </td>
-                <td id="{{ mat_name }}_diffP">0</td>
-                <td id="{{ mat_name }}_diffS">0</td>
+                <td id="{{ mat_name }}_diffP">{{ number }}</td>
+                <td id="{{ mat_name }}_diffS">{{ number*2 }}</td>
             </tr>
         {% endfor %}
         </tbody>
