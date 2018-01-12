@@ -31,4 +31,4 @@ new_prod = {'name': 'Gold',
             }
 # database.add_product(new_prod)
 # database.delete_product_id('5a4f69fbb9346e1c9ca2f686')
-# database.update_itemfield_by_id('products', '5a4f69d1b9346e12bc2b0476', 'preis', 14000)
+database.update_itemfield_by_id('vehicles', '5a587607b9346e1da4942ead', 'max_load', 2400)
