@@ -30,7 +30,7 @@ def get_products():
             mat_name = database.get_item_by_id('products', mat_id).get('name', 'NIX')
             materials.append({'name': mat_name, 'number': mat_nr})
         prod['mat_consume'] = materials
-        prod['preis'] = money(prod['preis'])
+        prod['preis_html'] = money(prod['preis'])
         products_list.append(prod)
     return products_list
 
@@ -54,6 +54,7 @@ def products():
     return render_template('products.html', title='Products',
                            acProd='active',
                            products=get_products())
+
 
 @app.route('/route', methods=['GET', 'POST'])
 def route():

@@ -9,6 +9,8 @@
             <th scope="col">Preis</th>
             <th scope="col">Gewicht</th>
             <th scope="col">Materials</th>
+            <th scope="col">Pieces</th>
+            <th scope="col">Receipt</th>
         </tr>
     </thead>
     <tbody>
@@ -16,7 +18,7 @@
         <tr>
             <td>{{ loop.index }}</td>
             <td>{{ product.name }}</td>
-            <td>${{ product.preis }}</td>
+            <td id="{{ product._id }}_price" data-value="{{ product.preis }}">$ {{ product.preis_html }}</td>
             <td>{{ product.gewicht }}</td>
             <td>
                 <ul class="list-group">
@@ -25,9 +27,15 @@
                 {% endfor %}
                 </ul>
             </td>
+            <td>
+                <input type="number" class="form-control col-3 product_number" id="{{ product._id }}" name="prod_number" value="0">
+            </td>
+            <td id="{{ product._id }}_receipt">$</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
+{% endblock %}
+{% block script %}
+<script src="/static/js/myscript.js"></script>
 {% endblock %}
