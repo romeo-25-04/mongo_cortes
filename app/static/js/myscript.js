@@ -31,7 +31,16 @@ $('.product_number').on('propertychange input', function (e) {
         var price_prod_val = $('#'+this_id+'_price').data('value');
         var price_prod = parseInt(price_prod_val);
         var receipt = this_val * price_prod;
-        $('#'+this_id+'_receipt').html("$ " + Number(receipt).toLocaleString('de'));
+        $('#' + this_id + '_receipt').html("$ " + Number(receipt).toLocaleString('de'));
+        $('.' + this_id + '_material').map(function(){
+            var mat_need = $(this).data('value');
+            var need = this_val * mat_need;
+            var need_place = need * 2;
+            var mat_id = this.id;
+            $('#' + mat_id + '_need').html(need);
+            $('#' + mat_id + '_place').html(need_place);
+
+        });
         console.log(this_id, this_val, price_prod_val, receipt);
     }
 });

@@ -28,7 +28,7 @@ def get_products():
             mat_id = mat.get('id', '')
             mat_nr = mat.get('number')
             mat_name = database.get_item_by_id('products', mat_id).get('name', 'NIX')
-            materials.append({'name': mat_name, 'number': mat_nr})
+            materials.append({'name': mat_name, 'number': mat_nr, 'id': mat_id})
         prod['mat_consume'] = materials
         prod['preis_html'] = money(prod['preis'])
         products_list.append(prod)

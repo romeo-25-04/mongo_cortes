@@ -21,11 +21,24 @@
             <td id="{{ product._id }}_price" data-value="{{ product.preis }}">$ {{ product.preis_html }}</td>
             <td>{{ product.gewicht }}</td>
             <td>
-                <ul class="list-group">
-                {% for material in product.mat_consume %}
-                    <li class="list-group-item">{{ material.number }} {{ material.name }}</li>
-                {% endfor %}
-                </ul>
+                <table class="table border border-dark">
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Pieces</th>
+                            <th>Place</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for material in product.mat_consume %}
+                        <tr>
+                            <td class="{{ product._id }}_material" id="{{ product._id }}_{{ material.id }}" data-value="{{ material.number }}">{{ material.number }} {{ material.name }}</td>
+                            <td id="{{ product._id }}_{{ material.id }}_need">0</td>
+                            <td id="{{ product._id }}_{{ material.id }}_place">0</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </td>
             <td>
                 <input type="number" class="form-control col-3 product_number" id="{{ product._id }}" name="prod_number" value="0">
