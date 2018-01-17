@@ -32,7 +32,7 @@ $('.product_number').on('propertychange input', function (e) {
         var price_prod = parseInt(price_prod_val);
         var receipt = this_val * price_prod;
         $('#' + this_id + '_receipt').html("$ " + Number(receipt).toLocaleString('de'));
-        $('.' + this_id + '_material').map(function(){
+        $('.' + this_id + '_material_number').map(function(){
             var mat_need = $(this).data('value');
             var need = this_val * mat_need;
             var need_place = need * 2;
@@ -41,6 +41,13 @@ $('.product_number').on('propertychange input', function (e) {
             $('#' + mat_id + '_place').html(need_place);
 
         });
-        console.log(this_id, this_val, price_prod_val, receipt);
+
+        var places = $("td." + this_id + '_place');
+        var total_place = 0;
+        $.each( places, function( key, value ) {
+            total_place = total_place + parseInt($(value).html());
+        });
+        $('#' + this_id + '_place_total').html(total_place);
+        console.log(this_id, this_val, price_prod_val, receipt, total_place);
     }
 });

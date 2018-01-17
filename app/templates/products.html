@@ -32,11 +32,16 @@
                     <tbody>
                     {% for material in product.mat_consume %}
                         <tr>
-                            <td class="{{ product._id }}_material" id="{{ product._id }}_{{ material.id }}" data-value="{{ material.number }}">{{ material.number }} {{ material.name }}</td>
+                            <td class="{{ product._id }}_material_number" id="{{ product._id }}_{{ material.id }}" data-value="{{ material.number }}">{{ material.number }} {{ material.name }}</td>
                             <td id="{{ product._id }}_{{ material.id }}_need">0</td>
-                            <td id="{{ product._id }}_{{ material.id }}_place">0</td>
+                            <td id="{{ product._id }}_{{ material.id }}_place" class="{{ product._id }}_place">0</td>
                         </tr>
                     {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
+                            <td><strong id="{{ product._id }}_place_total">0</strong></td>
+                        </tr>
                     </tbody>
                 </table>
             </td>
