@@ -8,6 +8,8 @@
             <th scope="col">Marke</th>
             <th scope="col">Preis</th>
             <th scope="col">Max Load</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
         </tr>
     </thead>
     <tbody>
@@ -17,10 +19,64 @@
             <td>{{ vehicle.marke }}</td>
             <td>${{ vehicle.kaufpreis }}</td>
             <td>{{ vehicle.max_load }}</td>
+            <td>
+                <a href="/delete"
+                   class="btn btn-primary btn-lg active"
+                   role="button"
+                   aria-pressed="true">Delete</a>
+            </td>
+            <td>
+                <a href="/update"
+                   class="btn btn-primary btn-lg active"
+                   role="button"
+                   aria-pressed="true">Update</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
 
 </table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVehicle">
+    Add New Vehicle
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="addVehicleLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVehicleLabel">Add Vehicle to DB</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form.group">
+                        <label for="kaufpreis">Kaufpreis</label>
+                        <input id="kaufpreis" name="kaufpreis" type="number" class="form-control">
+                    </div>
+                    <!--'kaufpreis': 100000000,-->
+                   <!--'marke': 'V-44 Blackfish',-->
+                   <!--'max_load': 5000,-->
+                   <!--'max_speed': 620,-->
+                   <!--'mietpreis': 50000000,-->
+                   <!--'panzerung': 400,-->
+                   <!--'passagiere': 3,-->
+                   <!--'pferdest': 1200,-->
+                   <!--'tank': 2000,-->
+                   <!--'veh_type': 'Flugzeug'-->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
