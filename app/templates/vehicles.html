@@ -8,6 +8,8 @@
             <th scope="col">Marke</th>
             <th scope="col">Preis</th>
             <th scope="col">Max Load</th>
+            <th scope="col">Passengers</th>
+            <th scope="col">Typ</th>
             <th scope="col">Delete</th>
             <th scope="col">Update</th>
         </tr>
@@ -19,6 +21,8 @@
             <td>{{ vehicle.marke }}</td>
             <td>${{ vehicle.kaufpreis }}</td>
             <td>{{ vehicle.max_load }}</td>
+            <td>{{ vehicle.passagiere }}</td>
+            <td>{{ vehicle.veh_type }}</td>
             <td>
                 <a href="/delete_vehicle/{{vehicle._id}}"
                    class="btn btn-danger btn-lg active"
