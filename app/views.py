@@ -82,20 +82,24 @@ def route():
 
 
 @app.route('/add_vehicle', methods=['GET', 'POST'])
-def add_vehicle():
-    template_veh = {'kaufpreis': 100,
-               'marke': 'Test',
-               'max_load': 100,
-               'max_speed': 120,
-               'mietpreis': 50,
-               'panzerung': 30,
-               'passagiere': 1,
-               'pferdest': 100,
-               'tank': 30,
-               'veh_type': 'PKW'}
+@app.route('/update_vehicle/<veh_id>', methods=['GET', 'POST'])
+def add_update_vehicle(veh_id=None):
+    if veh_id:
+        new_veh = database.get_item_by_id('vehicles', veh_id)
+    else:
+        new_veh = {'kaufpreis': 100,
+                   'marke': 'Test',
+                   'max_load': 100,
+                   'max_speed': 120,
+                   'mietpreis': 50,
+                   'panzerung': 30,
+                   'passagiere': 1,
+                   'pferdest': 100,
+                   'tank': 30,
+                   'veh_type': 'PKW'}
     if request.method == 'GET':
         return render_template('vehicle_form.html', title='Add / Update Vehicle',
-                               new_veh=template_veh)
+                               new_veh=new_veh)
     else:
         result = request.form
         new_veh = {'kaufpreis': int(result.get('kaufpreis', 22)),
@@ -108,30 +112,11 @@ def add_vehicle():
                    'pferdest': int(result.get('pferdest', 22)),
                    'tank': int(result.get('tank', 22)),
                    'veh_type': result.get('veh_type', 'PKW')}
-        database.add_vehicle(new_veh)
-        return redirect('/vehicles')
-
-
-@app.route('/update_vehicle/<veh_id>', methods=['GET', 'POST'])
-def update_vehicle(veh_id):
-    veh = database.get_item_by_id('vehicles', veh_id)
-    if request.method == 'GET':
-        return render_template('vehicle_form.html', title='Add / Update Vehicle',
-                               new_veh=veh)
-    else:
-        result = request.form
-        updated_veh = {'kaufpreis': int(result.get('kaufpreis', 22)),
-                       'marke': result.get('marke', 'NIX'),
-                       'max_load': int(result.get('max_load', 22)),
-                       'max_speed': int(result.get('max_speed', 22)),
-                       'mietpreis': int(result.get('mietpreis', 22)),
-                       'panzerung': int(result.get('kaufpreis', 22)),
-                       'passagiere': int(result.get('passagiere', 22)),
-                       'pferdest': int(result.get('pferdest', 22)),
-                       'tank': int(result.get('tank', 22)),
-                       'veh_type': result.get('veh_type', 'PKW')}
-        for key, value in updated_veh.items():
-            database.update_itemfield_by_id('vehicles', veh_id, key, value)
+        if veh_id:
+            for key, value in new_veh.items():
+                database.update_itemfield_by_id('vehicles', veh_id, key, value)
+        else:
+            database.add_vehicle(new_veh)
         return redirect('/vehicles')
 
 
