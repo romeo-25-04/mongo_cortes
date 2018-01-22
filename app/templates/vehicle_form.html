@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="container-fluid">
+    <form method="post">
+        <div class="form-group col-3">
+            <label for="marke">Name</label>
+            <input name="marke" type="text" class="form-control" id="marke" value="{{ new_veh.marke }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="kaufpreis">Price</label>
+            <input name="kaufpreis" type="number" class="form-control" id="kaufpreis" value="{{ new_veh.kaufpreis }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="max_load">Load</label>
+            <input name="max_load" type="number" class="form-control" id="max_load" value="{{ new_veh.max_load }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="max_speed">Max Speed</label>
+            <input name="max_speed" type="number" class="form-control" id="max_speed" value="{{ new_veh.max_speed }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="mietpreis">Rent</label>
+            <input name="mietpreis" type="number" class="form-control" id="mietpreis" value="{{ new_veh.mietpreis }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="panzerung">Panzerung</label>
+            <input name="panzerung" type="number" class="form-control" id="panzerung" value="{{ new_veh.panzerung }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="passagiere">Passengers</label>
+            <input name="passagiere" type="number" class="form-control" id="passagiere" value="{{ new_veh.passagiere }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="pferdest">PS</label>
+            <input name="pferdest" type="number" class="form-control" id="pferdest" value="{{ new_veh.pferdest }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="tank">Fuel</label>
+            <input name="tank" type="number" class="form-control" id="tank" value="{{ new_veh.tank }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="veh_type">Select Vehicle Type:</label>
+            <select name="veh_type" class="form-control" id="veh_type">
+                <option selected>PKW</option>
+                <option>LKW</option>
+                <option>Heli</option>
+                <option>Flugzeug</option>
+                <option>Haus</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add / Update Vehicle</button>
+    </form>
+</div>
+
+{% endblock %}

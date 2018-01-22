@@ -20,7 +20,7 @@ new_veh = {'kaufpreis': 100000000,
            'veh_type': 'Flugzeug'}
 # ADD DELETE TEST
 # database.add_vehicle(new_veh)
-# database.delete_vehicle_ID('5a4cfae4b9346e12c8167eb6')
+database.delete_vehicle_ID('5a65c2bcb9346e215c35b31e')
 
 new_prod = {'name': 'Elektrostühle',
             'preis': 560000,
