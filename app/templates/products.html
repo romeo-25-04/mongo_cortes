@@ -11,6 +11,8 @@
             <th scope="col">Materials</th>
             <th scope="col">Pieces</th>
             <th scope="col">Receipt</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +51,18 @@
                 <input type="number" class="form-control col-3 product_number" id="{{ product._id }}" name="prod_number" value="0">
             </td>
             <td id="{{ product._id }}_receipt">$</td>
+            <td>
+                <a href="/delete_product/{{product._id}}"
+                   class="btn btn-danger btn-lg active"
+                   role="button"
+                   aria-pressed="true">Delete</a>
+            </td>
+            <td>
+                <a href="/update_product/{{product._id}}"
+                   class="btn btn-primary btn-lg active"
+                   role="button"
+                   aria-pressed="true">Update</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

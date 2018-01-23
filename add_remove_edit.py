@@ -20,7 +20,7 @@ new_veh = {'kaufpreis': 100000000,
            'veh_type': 'Flugzeug'}
 # ADD DELETE TEST
 # database.add_vehicle(new_veh)
-database.delete_vehicle_ID('5a65c2bcb9346e215c35b31e')
+# database.delete_vehicle_ID('5a65c2bcb9346e215c35b31e')
 
 new_prod = {'name': 'Elektrostühle',
             'preis': 560000,
@@ -33,5 +33,5 @@ new_prod = {'name': 'Elektrostühle',
             ]
             }
 # database.add_product(new_prod)
-# database.delete_product_id('5a4f69fbb9346e1c9ca2f686')
-# database.update_itemfield_by_id('vehicles', '5a587607b9346e1da4942ead', 'max_load', 2400)
+# database.delete_product_id('5a67583fb9346e104858c7c7')
+database.update_itemfield_by_id('vehicles', '5a587607b9346e1da4942ead', 'max_load', 2400)

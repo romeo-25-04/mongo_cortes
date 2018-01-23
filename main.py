@@ -57,7 +57,8 @@ class Database:
         self.products_col.delete_one({'_id': ObjectId(id_str)})
 
     def get_item_by_id(self, col_name, id_str):
-        return self.db[col_name].find_one({'_id': ObjectId(id_str)})
+        item = self.db[col_name].find_one({'_id': ObjectId(id_str)})
+        return item if item else {}
 
     def update_itemfield_by_id(self, col_name, id_str, field, new_value):
         return self.db[col_name].update_one(

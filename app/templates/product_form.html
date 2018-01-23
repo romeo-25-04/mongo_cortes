@@ -14,23 +14,25 @@
             <label for="gewicht">Weight</label>
             <input name="gewicht" type="number" class="form-control" id="gewicht" value="{{ new_prod.gewicht }}">
         </div>
-        <div class="form-group col-3 border">
-            <label for="material_id">Select Material:</label>
-            <select name="materials_id[]" class="form-control" id="material_id">
+        {% for i in range(6) %}
+        <div class="form-group border">
+            <label for="material_id{{ i+1 }}">Select Material {{ i+1 }}:</label>
+            <select name="materials_id[]" class="form-control" id="material_id{{ i+1 }}">
                 {% for product in products %}
-                <option value="{{ product._id }}">
+                <option value="{{ product._id }}"
+                        {% if (new_prod.mat_consume[i] is defined)
+                        and (product._id == new_prod.mat_consume[i].id) %}selected{% endif %}>
                     {{ product.name }}
                 </option>
                 {% endfor %}
             </select>
-            <label for="material_nr">Number needed</label>
-            <input name="materials_nr[]" class="form-control" type="number" id="material_nr">
+            <label for="material_nr{{ i+1 }}">Number needed</label>
+            <input name="materials_nr[]" class="form-control"
+                   type="number" id="material_nr{{ i+1 }}"
+                   value="{% if (new_prod.mat_consume[i] is defined) %}{{ new_prod.mat_consume[i].number }}{% endif %}">
         </div>
-        <!--<div class="form-group col-3">-->
-            <!--<label for="material_nr">Number needed</label>-->
-            <!--<input name="materials[0][number]" class="form-control" type="number" id="material_nr">-->
-        <!--</div>-->
-        <button type="submit" class="btn btn-primary">Add / Update Vehicle</button>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Add / Update Product</button>
     </form>
 </div>
 

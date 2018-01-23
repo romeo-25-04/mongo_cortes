@@ -125,7 +125,9 @@ def delete_vehicle(veh_id):
     database.delete_vehicle_ID(veh_id)
     return redirect('/vehicles')
 
+
 @app.route('/add_product', methods=['GET', 'POST'])
+@app.route('/update_product/<prod_id>', methods=['GET', 'POST'])
 def add_update_product(prod_id=None):
     new_prod = {'name': 'Test_Product',
                 'preis': 5,
@@ -141,14 +143,26 @@ def add_update_product(prod_id=None):
                                new_prod=new_prod)
     else:
         result = request.form
-        materials = zip(result.getlist('materials_id[]', []),
-                        result.getlist('materials_nr[]', []))
+        materials_id = result.getlist('materials_id[]')
+        materials_nr = result.getlist('materials_nr[]')
+        materials = [
+            {'id': materials_id[i], 'number': int(materials_nr[i])}
+            for i in range(len(materials_id))
+            if materials_nr[i] != '' and materials_id[i] != ''
+        ]
         new_prod = {'name': result.get('name', 'NIX'),
                     'preis': int(result.get('preis', 22)),
                     'gewicht': int(result.get('gewicht', 22)),
-                    'mat_consume': list(materials)
-                    #     [
-                    #     {'id': result.get('material_id', 22), 'number': int(result.get('material_nr', 22))}
-                    # ]
+                    'mat_consume': materials
                     }
-        return str(new_prod)
+        if prod_id:
+            for key, value in new_prod.items():
+                database.update_itemfield_by_id('products', prod_id, key, value)
+        else:
+            database.add_product(new_prod)
+        return redirect('/products')
+
+@app.route('/delete_product/<prod_id>')
+def delete_product(prod_id):
+    database.delete_product_id(prod_id)
+    return redirect('/products')
