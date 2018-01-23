@@ -124,3 +124,31 @@ def add_update_vehicle(veh_id=None):
 def delete_vehicle(veh_id):
     database.delete_vehicle_ID(veh_id)
     return redirect('/vehicles')
+
+@app.route('/add_product', methods=['GET', 'POST'])
+def add_update_product(prod_id=None):
+    new_prod = {'name': 'Test_Product',
+                'preis': 5,
+                'gewicht': 2,
+                'mat_consume': []
+                }
+    if prod_id:
+        new_prod = database.get_item_by_id('products', prod_id)
+
+    if request.method == "GET":
+        return render_template('product_form.html', title='Add / Update Product',
+                               products=get_products(),
+                               new_prod=new_prod)
+    else:
+        result = request.form
+        materials = zip(result.getlist('materials_id[]', []),
+                        result.getlist('materials_nr[]', []))
+        new_prod = {'name': result.get('name', 'NIX'),
+                    'preis': int(result.get('preis', 22)),
+                    'gewicht': int(result.get('gewicht', 22)),
+                    'mat_consume': list(materials)
+                    #     [
+                    #     {'id': result.get('material_id', 22), 'number': int(result.get('material_nr', 22))}
+                    # ]
+                    }
+        return str(new_prod)

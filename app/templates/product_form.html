@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="container-fluid">
+    <form method="post">
+        <div class="form-group col-3">
+            <label for="name">Name</label>
+            <input name="name" type="text" class="form-control" id="name" value="{{ new_prod.name }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="preis">Price</label>
+            <input name="preis" type="number" class="form-control" id="preis" value="{{ new_prod.preis }}">
+        </div>
+        <div class="form-group col-3">
+            <label for="gewicht">Weight</label>
+            <input name="gewicht" type="number" class="form-control" id="gewicht" value="{{ new_prod.gewicht }}">
+        </div>
+        <div class="form-group col-3 border">
+            <label for="material_id">Select Material:</label>
+            <select name="materials_id[]" class="form-control" id="material_id">
+                {% for product in products %}
+                <option value="{{ product._id }}">
+                    {{ product.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <label for="material_nr">Number needed</label>
+            <input name="materials_nr[]" class="form-control" type="number" id="material_nr">
+        </div>
+        <!--<div class="form-group col-3">-->
+            <!--<label for="material_nr">Number needed</label>-->
+            <!--<input name="materials[0][number]" class="form-control" type="number" id="material_nr">-->
+        <!--</div>-->
+        <button type="submit" class="btn btn-primary">Add / Update Vehicle</button>
+    </form>
+</div>
+
+{% endblock %}
