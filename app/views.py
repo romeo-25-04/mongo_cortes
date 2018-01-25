@@ -1,9 +1,10 @@
 from flask import render_template, request, redirect
 from app import app
-from main import Database, money
-from bson import ObjectId
+from app.logic.main import Database, money
 
-database = Database('main_amareto', 'michepass')
+db_user = app.config['MLAB_USER']
+db_password = app.config['MLAB_PASSWORD']
+database = Database(db_user, db_password)
 
 
 def get_vehicles():
@@ -161,6 +162,7 @@ def add_update_product(prod_id=None):
         else:
             database.add_product(new_prod)
         return redirect('/products')
+
 
 @app.route('/delete_product/<prod_id>')
 def delete_product(prod_id):

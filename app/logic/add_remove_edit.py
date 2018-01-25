@@ -1,5 +1,5 @@
 import argparse
-from main import Database
+from app.logic.main import Database
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--user')
