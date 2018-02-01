@@ -31,7 +31,7 @@ $('.product_number').on('propertychange input', function (e) {
         var price_prod_val = $('#'+this_id+'_price').data('value');
         var price_prod = parseInt(price_prod_val);
         var receipt = this_val * price_prod;
-        $('#' + this_id + '_receipt').html("$ " + Number(receipt).toLocaleString('de'));
+        $('#' + this_id + '_receipt').html("$" + Number(receipt).toLocaleString('de'));
         $('.' + this_id + '_material_number').map(function(){
             var mat_need = $(this).data('value');
             var need = this_val * mat_need;
