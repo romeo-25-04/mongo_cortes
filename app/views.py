@@ -48,7 +48,8 @@ def vehicles():
     return render_template('vehicles.html',
                            title='Vehicles',
                            acVeh='active',
-                           vehicles=get_vehicles())
+                           vehicles=get_vehicles(),
+                           admin=False)
 
 
 @app.route('/products')
@@ -79,7 +80,8 @@ def route():
                            acRoute='active',
                            vehicles=vehicles,
                            products=products,
-                           result=result)
+                           result=result,
+                           admin=False)
 
 
 @app.route('/add_vehicle', methods=['GET', 'POST'])

@@ -11,8 +11,10 @@
             <th scope="col">Materials</th>
             <th scope="col">Pieces</th>
             <th scope="col">Receipt</th>
+            {% if admin %}
             <th scope="col">Delete</th>
             <th scope="col">Update</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -51,6 +53,7 @@
                 <input type="number" class="form-control product_number" id="{{ product._id }}" name="prod_number" value="0">
             </td>
             <td id="{{ product._id }}_receipt">$</td>
+            {% if admin %}
             <td>
                 <a href="/delete_product/{{product._id}}"
                    class="btn btn-danger btn-lg active"
@@ -63,13 +66,14 @@
                    role="button"
                    aria-pressed="true">Update</a>
             </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
+{% if admin %}
 <a href="/add_product" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add New Product</a>
-
+{% endif %}
 {% endblock %}
 {% block script %}
 <script src="/static/js/myscript.js"></script>

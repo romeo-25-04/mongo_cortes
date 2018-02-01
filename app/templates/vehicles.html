@@ -10,8 +10,10 @@
             <th scope="col">Max Load</th>
             <th scope="col">Passengers</th>
             <th scope="col">Typ</th>
+            {% if admin %}
             <th scope="col">Delete</th>
             <th scope="col">Update</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -23,6 +25,7 @@
             <td>{{ vehicle.max_load }}</td>
             <td>{{ vehicle.passagiere }}</td>
             <td>{{ vehicle.veh_type }}</td>
+            {% if admin %}
             <td>
                 <a href="/delete_vehicle/{{vehicle._id}}"
                    class="btn btn-danger btn-lg active"
@@ -35,12 +38,13 @@
                    role="button"
                    aria-pressed="true">Update</a>
             </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
 
 </table>
-
+{% if admin %}
 <a href="/add_vehicle" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Vehicle</a>
-
+{% endif %}
 {% endblock %}
