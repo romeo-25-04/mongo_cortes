@@ -18,8 +18,12 @@ def get_vehicles():
     return vehicles
 
 
-def get_products():
-    sorted_products = database.products_col.find().sort([
+def get_products(filter_ids=[]):
+    if filter_ids:
+        found_products = database.get_items_by_id_list('products', filter_ids)
+    else:
+        found_products = database.products_col.find()
+    sorted_products = found_products.sort([
         ('name', 1)
     ])
     products_list = []
@@ -52,11 +56,15 @@ def vehicles():
                            admin=False)
 
 
-@app.route('/products')
+@app.route('/products', methods=['GET', 'POST'])
 def products():
+    result = []
+    if request.method == "POST":
+        result = request.form.getlist("product")
     return render_template('products.html', title='Products',
                            acProd='active',
-                           products=get_products())
+                           products=get_products(result),
+                           all_products=get_products())
 
 
 @app.route('/route', methods=['GET', 'POST'])

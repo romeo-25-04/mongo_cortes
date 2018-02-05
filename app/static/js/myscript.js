@@ -51,3 +51,7 @@ $('.product_number').on('propertychange input', function (e) {
         console.log(this_id, this_val, price_prod_val, receipt, total_place);
     }
 });
+
+$('#filterdropdown').on('hide.bs.dropdown', function () {
+    return false;
+});

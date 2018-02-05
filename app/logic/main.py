@@ -60,6 +60,11 @@ class Database:
         item = self.db[col_name].find_one({'_id': ObjectId(id_str)})
         return item if item else {}
 
+    def get_items_by_id_list(self, col_name, id_list):
+        id_list = [ObjectId(id_str) for id_str in id_list]
+        items = self.db[col_name].find({'_id': {'$in': id_list}})
+        return items
+
     def update_itemfield_by_id(self, col_name, id_str, field, new_value):
         return self.db[col_name].update_one(
             {'_id': ObjectId(id_str)},

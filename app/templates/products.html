@@ -1,5 +1,27 @@
 {% extends "index.html" %}
 {% block body %}
+<form method="post">
+    <div class="form-group dropright" id="filterdropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button"
+                id="filterByName" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Filter by Name
+        </button>
+        <div class="dropdown-menu scrollable-menu" aria-labelledby="filterByName">
+            <h6 class="dropdown-header">Select Products:</h6>
+            {% for product in all_products %}
+            <div class="form-check dropdown-item">
+                <input name="product" class="form-check-input" type="checkbox" value="{{ product._id }}"
+                       id="defaultCheck{{ loop.index }}">
+                <label class="form-check-label" for="defaultCheck{{ loop.index }}">
+                    {{ product.name }}
+                </label>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
 
 <table class="table table-striped border border-dark">
     <thead class="thead-dark">
