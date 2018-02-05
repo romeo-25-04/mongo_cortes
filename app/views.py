@@ -64,7 +64,8 @@ def products():
     return render_template('products.html', title='Products',
                            acProd='active',
                            products=get_products(result),
-                           all_products=get_products())
+                           all_products=get_products(),
+                           admin=False)
 
 
 @app.route('/route', methods=['GET', 'POST'])
