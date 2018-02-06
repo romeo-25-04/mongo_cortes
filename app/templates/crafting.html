@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block body %}
+
+<p>To craft <strong>{{ product.number }}</strong> pieces of <strong>{{ product.name }}</strong> you will need:</p>
+<ul class="list-group">
+    {% for material in product.mat_consume %}
+    <li class="list-group-item d-inline-flex p-2 justify-content-between align-items-center">
+        {{ material.name }}
+        <span class="badge badge-primary badge-pill">{{ material.number }}</span>
+        <ul class="list-group">
+            {% for material_lvl_1 in material.mat_consume %}
+            <li class="list-group-item d-inline-flex p-2 justify-content-between align-items-center">
+                {{ material_lvl_1.name }}
+                <span class="badge badge-secondary badge-pill">{{ material_lvl_1.number }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+{% block script %}
+<script src="/static/js/myscript.js"></script>
+{% endblock %}

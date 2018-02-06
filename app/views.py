@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, jsonify
 from app import app
 from app.logic.main import Database, money
 
@@ -65,7 +65,7 @@ def products():
                            acProd='active',
                            products=get_products(result),
                            all_products=get_products(),
-                           admin=False)
+                           admin=True)
 
 
 @app.route('/route', methods=['GET', 'POST'])
@@ -179,3 +179,36 @@ def add_update_product(prod_id=None):
 def delete_product(prod_id):
     database.delete_product_id(prod_id)
     return redirect('/products')
+
+
+def get_materials(prod_id, number=1):
+    prod = database.get_item_by_id('products', prod_id)
+    materials = prod.get('mat_consume', [])
+    crafting = []
+    for mat in materials:
+        mat_id = mat.get('id')
+        mat_nr = mat.get('number')
+        mat_db = database.get_item_by_id('products', mat_id)
+        mat_name = mat_db.get('name')
+        new_mat = {
+            'name': mat_name,
+            'number': mat_nr * number,
+            'mat_consume': get_materials(mat_id, number=mat_nr * number)
+        }
+        crafting.append(new_mat)
+    return crafting
+
+
+@app.route('/crafting/<prod_id>/<int:number>')
+def show_materials(prod_id=None, number=1):
+    product = dict()
+    if prod_id:
+        prod = database.get_item_by_id('products', prod_id)
+        product = {
+            'name': prod.get('name'),
+            'number': number,
+            'mat_consume': get_materials(prod_id=prod_id, number=number)
+        }
+
+    return render_template('crafting.html', title='Crafting ' + product.get('name', ''),
+                           product=product)
