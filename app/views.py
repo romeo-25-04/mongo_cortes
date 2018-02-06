@@ -219,5 +219,6 @@ def show_materials(prod_id=None, number=1):
             'number': number,
             'mat_consume': mat_consume
         }
+    sorted_freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
     return render_template('crafting.html', title='Crafting ' + product.get('name', ''),
-                           product=product, raw_materials=freq)
+                           product=product, raw_materials=sorted_freq)
