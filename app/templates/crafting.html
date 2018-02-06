@@ -2,23 +2,45 @@
 {% block body %}
 
 <p>To craft <strong>{{ product.number }}</strong> pieces of <strong>{{ product.name }}</strong> you will need:</p>
-<ul class="list-group">
-    {% for material in product.mat_consume %}
-    <li class="list-group-item d-inline-flex p-2 justify-content-between align-items-center">
-        {{ material.name }}
-        <span class="badge badge-primary badge-pill">{{ material.number }}</span>
+<div class="row">
+    <div class="col">
         <ul class="list-group">
-            {% for material_lvl_1 in material.mat_consume %}
-            <li class="list-group-item d-inline-flex p-2 justify-content-between align-items-center">
-                {{ material_lvl_1.name }}
-                <span class="badge badge-secondary badge-pill">{{ material_lvl_1.number }}</span>
+            {% for material in product.mat_consume %}
+            <li class="list-group-item">
+                {{ material.name }}
+                <span class="badge badge-primary badge-pill">{{ material.number }}</span>
+                <ul class="list-group">
+                    {% for material_lvl_1 in material.mat_consume %}
+                    <li class="list-group-item">
+                        {{ material_lvl_1.name }}
+                        <span class="badge badge-secondary badge-pill">{{ material_lvl_1.number }}</span>
+                        <ul class="list-group">
+                            {% for material_lvl_2 in material_lvl_1.mat_consume %}
+                            <li class="list-group-item">
+                                {{ material_lvl_2.name }}
+                                <span class="badge badge-warning badge-pill">{{ material_lvl_2.number }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
             </li>
             {% endfor %}
         </ul>
-    </li>
-    {% endfor %}
-</ul>
-
+    </div>
+    <div class="col">
+        <h3>Raw materials you will need:</h3>
+        <ul class="list-group">
+            {% for key, value in raw_materials.items() %}
+            <li class="list-group-item">
+                {{ key }}
+                <span class="badge badge-primary badge-pill">{{ value }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
 {% block script %}
 <script src="/static/js/myscript.js"></script>

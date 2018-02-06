@@ -45,7 +45,7 @@
     {% for product in products %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td>{{ product.name }}</td>
+            <td><a href="/crafting/{{ product._id }}/1">{{ product.name }}</a></td>
             <td id="{{ product._id }}_price" data-value="{{ product.preis }}">$ {{ product.preis_html }}</td>
             <td>{{ product.gewicht }}</td>
             <td>

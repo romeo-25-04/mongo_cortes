@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, jsonify
 from app import app
 from app.logic.main import Database, money
+import pprint
 
 db_user = app.config['MLAB_USER']
 db_password = app.config['MLAB_PASSWORD']
@@ -65,7 +66,7 @@ def products():
                            acProd='active',
                            products=get_products(result),
                            all_products=get_products(),
-                           admin=True)
+                           admin=False)
 
 
 @app.route('/route', methods=['GET', 'POST'])
@@ -181,34 +182,42 @@ def delete_product(prod_id):
     return redirect('/products')
 
 
-def get_materials(prod_id, number=1):
+def get_materials(prod_id, number=1, freq=dict()):
     prod = database.get_item_by_id('products', prod_id)
     materials = prod.get('mat_consume', [])
     crafting = []
+    freq = freq
     for mat in materials:
         mat_id = mat.get('id')
         mat_nr = mat.get('number')
         mat_db = database.get_item_by_id('products', mat_id)
         mat_name = mat_db.get('name')
+        mat_consume, freq = get_materials(mat_id, number=mat_nr * number, freq=freq)
         new_mat = {
             'name': mat_name,
             'number': mat_nr * number,
-            'mat_consume': get_materials(mat_id, number=mat_nr * number)
+            'mat_consume': mat_consume
         }
+        if len(mat_consume) == 0:
+            if mat_name in freq:
+                freq[mat_name] += mat_nr * number
+            else:
+                freq[mat_name] = mat_nr * number
         crafting.append(new_mat)
-    return crafting
+    return crafting, freq
 
 
 @app.route('/crafting/<prod_id>/<int:number>')
 def show_materials(prod_id=None, number=1):
     product = dict()
+    freq = dict()
     if prod_id:
         prod = database.get_item_by_id('products', prod_id)
+        mat_consume, freq = get_materials(prod_id=prod_id, number=number, freq=freq)
         product = {
             'name': prod.get('name'),
             'number': number,
-            'mat_consume': get_materials(prod_id=prod_id, number=number)
+            'mat_consume': mat_consume
         }
-
     return render_template('crafting.html', title='Crafting ' + product.get('name', ''),
-                           product=product)
+                           product=product, raw_materials=freq)
