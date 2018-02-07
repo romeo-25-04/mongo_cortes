@@ -48,7 +48,11 @@ $('.product_number').on('propertychange input', function (e) {
             total_place = total_place + parseInt($(value).html());
         });
         $('#' + this_id + '_place_total').html(total_place);
-        console.log(this_id, this_val, price_prod_val, receipt, total_place);
+
+        // Get href for crafting
+        var new_link = "/crafting/"+ this_id + "/" + this_val;
+        $('#' + this_id + '_link').attr("href", new_link);
+        console.log(this_id, this_val, price_prod_val, receipt, total_place, new_link);
     }
 });
 
