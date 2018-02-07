@@ -1,0 +1,11 @@
+{% macro material_list(materials) %}
+    <ul class="list-group">
+        {% for material in materials.mat_consume %}
+        <li class="list-group-item">
+            {{ material.name }}
+            <span class="badge badge-warning badge-pill">{{ material.number }}</span>
+            {{ material_list( material ) }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

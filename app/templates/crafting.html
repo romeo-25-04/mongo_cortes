@@ -1,33 +1,11 @@
 {% extends "index.html" %}
-{% block body %}
 
+{% block body %}
+{% from "macros.html" import material_list %}
 <p>To craft <strong>{{ product.number }}</strong> pieces of <strong>{{ product.name }}</strong> you will need:</p>
 <div class="row">
     <div class="col">
-        <ul class="list-group">
-            {% for material in product.mat_consume %}
-            <li class="list-group-item">
-                {{ material.name }}
-                <span class="badge badge-primary badge-pill">{{ material.number }}</span>
-                <ul class="list-group">
-                    {% for material_lvl_1 in material.mat_consume %}
-                    <li class="list-group-item">
-                        {{ material_lvl_1.name }}
-                        <span class="badge badge-secondary badge-pill">{{ material_lvl_1.number }}</span>
-                        <ul class="list-group">
-                            {% for material_lvl_2 in material_lvl_1.mat_consume %}
-                            <li class="list-group-item">
-                                {{ material_lvl_2.name }}
-                                <span class="badge badge-warning badge-pill">{{ material_lvl_2.number }}</span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
+        {{ material_list(product) }}
     </div>
     <div class="col">
         <h3>Raw materials you will need:</h3>
