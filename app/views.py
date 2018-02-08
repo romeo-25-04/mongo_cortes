@@ -220,5 +220,7 @@ def show_materials(prod_id=None, number=1):
             'mat_consume': mat_consume
         }
     sorted_freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+    summ_pieces = sum([val for key, val in sorted_freq])
     return render_template('crafting.html', title='Crafting ' + product.get('name', ''),
-                           product=product, raw_materials=sorted_freq)
+                           product=product, raw_materials=sorted_freq,
+                           summ_pieces=summ_pieces)
