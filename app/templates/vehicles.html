@@ -45,6 +45,10 @@
 
 </table>
 {% if admin %}
-<a href="/add_vehicle" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Vehicle</a>
+<form action="/add_vehicle" method="get">
+    {{ add_button_form.recaptcha }}
+    {{ add_button_form.submit }}
+    {{ add_button_form.csrf_token }}
+</form>
 {% endif %}
 {% endblock %}

@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, jsonify
 from app import app
 from app.logic.main import Database, money
 import pprint
+from .forms import ButtonForm
 
 db_user = app.config['MLAB_USER']
 db_password = app.config['MLAB_PASSWORD']
@@ -50,11 +51,13 @@ def index():
 
 @app.route('/vehicles')
 def vehicles():
+    add_button_form = ButtonForm()
     return render_template('vehicles.html',
                            title='Vehicles',
                            acVeh='active',
                            vehicles=get_vehicles(),
-                           admin=False)
+                           add_button_form=add_button_form,
+                           admin=True)
 
 
 @app.route('/products', methods=['GET', 'POST'])
@@ -113,7 +116,7 @@ def add_update_vehicle(veh_id=None):
     if request.method == 'GET':
         return render_template('vehicle_form.html', title='Add / Update Vehicle',
                                new_veh=new_veh)
-    else:
+    elif request.method == 'POST':
         result = request.form
         new_veh = {'kaufpreis': int(result.get('kaufpreis', 22)),
                    'marke': result.get('marke', 'NIX'),
@@ -130,7 +133,7 @@ def add_update_vehicle(veh_id=None):
                 database.update_itemfield_by_id('vehicles', veh_id, key, value)
         else:
             database.add_vehicle(new_veh)
-        return redirect('/vehicles')
+    return redirect('/vehicles')
 
 
 @app.route('/delete_vehicle/<veh_id>')
