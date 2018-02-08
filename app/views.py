@@ -223,4 +223,4 @@ def show_materials(prod_id=None, number=1):
     summ_pieces = sum([val for key, val in sorted_freq])
     return render_template('crafting.html', title='Crafting ' + product.get('name', ''),
                            product=product, raw_materials=sorted_freq,
-                           summ_pieces=summ_pieces)
+                           summ_pieces=money(summ_pieces), summ_place=money(summ_pieces * 2))
