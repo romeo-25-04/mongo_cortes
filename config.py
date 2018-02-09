@@ -1,3 +1,5 @@
+HOST = "localhost"
+PORT = 5000
 MLAB_USER = "username"
 MLAB_PASSWORD = "password"
 DEBUG=False
