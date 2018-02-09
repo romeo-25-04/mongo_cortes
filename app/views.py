@@ -57,7 +57,7 @@ def vehicles():
                            acVeh='active',
                            vehicles=get_vehicles(),
                            add_button_form=add_button_form,
-                           admin=True)
+                           admin=False)
 
 
 @app.route('/products', methods=['GET', 'POST'])

@@ -1,7 +1,7 @@
 {% macro material_list(materials) %}
     <ul class="list-group">
         {% for material in materials.mat_consume %}
-        <li class="list-group-item">
+        <li class="list-group-item border-primary">
             {{ material.name }}
             <span class="badge badge-warning badge-pill">{{ material.number }}</span>
             {{ material_list( material ) }}
