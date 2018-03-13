@@ -1,4 +1,73 @@
 {% extends "index.html" %}
 {% block body %}
+{% from "macros.html" import get_mat_number %}
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Produkts</th>
+            {% for veh in veh_store %}
+            <th scope="col">{{ veh.name }} ({{ veh.max_load }})</th>
+            {% endfor %}
+            <th scope="col">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_veh_store">
+                    <i class="material-icons">local_shipping</i>
+                </button>
+            </th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for prod_name in stored_prods_names %}
+        <tr>
+            <td scope="col">{{ prod_name }}</td>
+            {% for veh in veh_store %}
+            <td scope="col">{{ get_mat_number(prod_name, veh.products) }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal add vehicle to store -->
+<div class="modal fade"
+     id="add_veh_store" tabindex="-1"
+     role="dialog" aria-labelledby="add_veh_storeLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add_veh_storeLabel">Add Vehicle to Warehouse</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/add_veh_store">
+                    <div class="form-group">
+                        <label for="formSelectVehicle">Select Vehicle</label>
+                        <select class="form-control" id="formSelectVehicle" name="Vehicle">
+                            {% for vehicle in vehicles %}
+                            <option value="{{ vehicle._id }}">{{
+                                vehicle.marke }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleName">Vehicle Name</label>
+                        <input name="vehicleName" type="text" class="form-control" id="vehicleName">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -12,6 +12,7 @@ class Database:
     VEHICLE_KEYS = ['kaufpreis', 'marke', 'max_load', 'max_speed', 'mietpreis',
                     'panzerung', 'passagiere', 'pferdest', 'tank', 'veh_type']
     PRODUCT_KEYS = ['name', 'preis', 'gewicht', 'mat_consume']
+    VEH_STORE_KEYS = ['veh_id', 'name', 'order', 'products']
 
     def __init__(self, user, password):
         self.client = MongoClient(
@@ -21,6 +22,7 @@ class Database:
         self.db = self.client['michecortes_db']
         self.vehicles_col = self.db['vehicles']
         self.products_col = self.db['products']
+        self.store_col = self.db['store']
 
     def add_vehicle(self, veh):
         valid = False
@@ -96,6 +98,36 @@ class Database:
             number = pieces * mat.get('number', 0)
             components.append((mat_name, number))
         return prod.get('name', 'NIX'), veh.get('marke', 'Nix'), pieces, money(int(receipt)), components
+
+    def add_veh_store(self, veh_store):
+        """
+        add vehicle to store collection
+        :param veh_store: {
+                    'veh_id': 'from vehicles',
+                    'name': 'Trashmaster',
+                    'order': 1, <-- stored in db
+                    'products': [{'product': 'from products', 'number': 330}]
+                }
+        :return: inserted_id
+        """
+        valid = False
+        for key in self.VEH_STORE_KEYS:
+            if key in veh_store.keys():
+                valid = True
+            else:
+                valid = False
+                break
+        if valid:
+            inserted_id = self.store_col.insert_one(veh_store).inserted_id
+        else:
+            inserted_id = None
+        return inserted_id
+
+    def get_stored_products(self):
+        veh_store = self.store_col.find()
+        stored_prods = [prod for veh in veh_store
+                        for prod in veh.get('products', [])]
+        return stored_prods
 
 
 def money(dolar):
@@ -173,6 +205,25 @@ def main():
     ))
     for mat_name, number in info:
         print('You need {:3} pieces ({:4} raw materials) of {}'.format(number, number * 2, mat_name))
+
+    sorted_vef_store = database.store_col.find().sort([
+        ('order', ASCENDING)
+    ])
+
+    for veh in sorted_vef_store:
+        print('{} {} {} {}'.format(
+            veh.get('veh_id', 'NIX'),
+            veh.get('name', 'NIX'),
+            veh.get('order', 'NIX'),
+            veh.get('products', [])
+        ))
+    print()
+    print(database.get_stored_products())
+
+    stored_prods_names = [database.get_item_by_id('products', prod.get('product', '')).get('name')
+                          for prod in database.get_stored_products()]
+    stored_prods_names = set(stored_prods_names)
+    print(stored_prods_names)
 
 
 if __name__ == '__main__':

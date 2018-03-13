@@ -34,4 +34,21 @@ new_prod = {'name': 'Elektrostühle',
             }
 # database.add_product(new_prod)
 # database.delete_product_id('5a67583fb9346e104858c7c7')
-database.update_itemfield_by_id('vehicles', '5a587607b9346e1da4942ead', 'max_load', 2400)
+# database.update_itemfield_by_id('vehicles', '5a587607b9346e1da4942ead', 'max_load', 2400)
+
+new_veh_store = {
+    'veh_id': '5a3b9bffb9346e15603fe81c',
+    'name': 'Taxi 1',
+    'order': 2,
+    'products': [
+        {'product': '5a6765a0b9346e1bf07445f2', 'number': 118},
+        {'product': '5a676c00b9346e1d6870eabf', 'number': 55},
+        {'product': '5a4f6fe3b9346e1cf42de7c0', 'number': 220},
+        {'product': '5a67672fb9346e1d6870eab9', 'number': 110},
+        {'product': '5a560fef8c88be29a0801ae7', 'number': 146},
+        {'product': '5a9514f8b9346e18543f0bb7', 'number': 165},
+        {'product': '5a6a4637689aa83db197e154', 'number': 110}
+    ]
+}
+
+database.add_veh_store(new_veh_store)

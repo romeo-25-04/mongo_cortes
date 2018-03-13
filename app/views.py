@@ -228,7 +228,37 @@ def show_materials(prod_id=None, number=1):
                            product=product, raw_materials=sorted_freq,
                            summ_pieces=money(summ_pieces), summ_place=money(summ_pieces * 2))
 
+
 @app.route('/store')
 def store():
+    veh_store_cursor = database.store_col.find().sort([
+        ('order', 1)
+    ])
+    veh_store = []
+    for veh in veh_store_cursor:
+        for prod in veh.get('products', []):
+            prod['name'] = database.get_item_by_id('products', prod.get('product', '')).get('name')
+        veh['max_load'] = database.get_item_by_id('vehicles', veh.get('veh_id', '')).get('max_load')
+        veh_store.append(veh)
+    stored_prods_names = [database.get_item_by_id('products', prod.get('product', '')).get('name')
+                              for prod in database.get_stored_products()]
+    stored_prods_names = set(stored_prods_names)
+    return render_template('store.html', title='Warehouse Logistics', acStore='active',
+                           veh_store=veh_store,
+                           stored_prods_names=stored_prods_names,
+                           vehicles=get_vehicles())
 
-    return render_template('store.html', title='Warehouse Logistics')
+
+@app.route('/add_veh_store', methods=['POST'])
+def add_veh_store():
+    result = request.form
+    ves_store_col = database.store_col
+    order = database.store_col.find().count()
+    new_veh_store = {
+        'veh_id': result.get('Vehicle', 'NIX'),
+        'name': result.get('vehicleName', 'NIX'),
+        'order': order + 1,
+        'products': []
+    }
+    database.add_veh_store(new_veh_store)
+    return redirect('/store')

@@ -9,3 +9,9 @@
         {% endfor %}
     </ul>
 {% endmacro %}
+
+{% macro get_mat_number(prod_name, products) %}
+{% for prod in products %}
+{% if prod_name == prod.name %}{{ prod.number }}{% endif %}
+{% endfor %}
+{% endmacro %}
