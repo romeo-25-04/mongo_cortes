@@ -227,3 +227,8 @@ def show_materials(prod_id=None, number=1):
     return render_template('crafting.html', title='Crafting ' + product.get('name', ''),
                            product=product, raw_materials=sorted_freq,
                            summ_pieces=money(summ_pieces), summ_place=money(summ_pieces * 2))
+
+@app.route('/store')
+def store():
+
+    return render_template('store.html', title='Warehouse Logistics')
